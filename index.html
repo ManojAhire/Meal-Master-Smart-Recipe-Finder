@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Master - Smart Recipe Finder</title>
+    <!-- Linking our CSS file -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
-    <div id="topbar">
+    <!-- Header Section -->
+    <header id="topbar">
         <div id="site-name">
             <h1>🍽 Meal Master</h1>
             <p>Find recipes with what you have!</p>
         </div>
         <button id="dark">🌙 Dark Mode</button>
-    </div>
+    </header>
 
-    <div id="filterbtns">
+    <!-- Navigation / Filter Section -->
+    <nav id="filterbtns">
         <button class="f">All</button>
         <button class="f">🍗 Chicken</button>
         <button class="f">🥩 Beef</button>
@@ -25,56 +27,52 @@
         <button class="f">🥦 Vegetarian</button>
         <button class="f">🍰 Dessert</button>
         <button class="f">🍝 Pasta</button>
-        <button class="f" id="favbtn">❤️ Favorites (<span id="favcount">0</span>)</button>
-    </div>
+    </nav>
 
-    <div id="wrapper">
+    <!-- Main Content Area -->
+    <main id="wrapper">
 
-
-        <div id="searcharea">
-            <input type="text" id="searchbox" placeholder="Search by meal name or ingredient...">
+        <!-- Search Section -->
+        <section id="searcharea">
+            <input type="text" id="searchbox" placeholder="Search for a meal...">
             <button id="searchbtn">🔍 Search</button>
             <button id="clearbtn">Clear</button>
-        </div>
+        </section>
 
+        <!-- Random Meal Section -->
+        <section id="randombtnbox">
+            <button id="randombtn">🎲 Surprise Me!</button>
+        </section>
 
-        <div id="randombtnbox">
-            <button id="randombtn">🎲 Surprise Me! Get a Random Meal</button>
-        </div>
+        <!-- Meals Display Section -->
+        <section id="mealsarea">
+            <p id="waitMsg">Loading... ⏳</p>
+            <p id="oopsMsg">❌ Error! Try again.</p>
+            <p id="nothingMsg">😕 No meals found.</p>
 
-
-        <div id="mealsarea">
-            <p id="waitMsg">Loading yummy meals... please wait ⏳</p>
-            <p id="oopsMsg">❌ Something went wrong. Try again!</p>
-            <p id="nothingMsg">😕 No meals found. Try something else!</p>
-
-            <div id="allcards"></div>
-        </div>
-
-
-        <div id="favsarea">
-            <div id="favstop">
-                <h2>❤️ Your Favorite Recipes</h2>
-                <button id="backbtn">← Go Back</button>
+            <div id="allcards">
+                <!-- Meal cards will appear here -->
             </div>
-            <p id="favsEmpty">You have no favorite recipes yet. Start saving some!</p>
-            <div id="favscards"></div>
-        </div>
+        </section>
+
+        <!-- Recipe Popup (Modal) -->
         <div id="recipePopup">
             <div id="popupBox">
                 <button id="closePopup">✕ Close</button>
-                <div id="popupContent">
-                </div>
+                <article id="popupContent">
+                    <!-- Recipe details will appear here -->
+                </article>
             </div>
         </div>
 
-    </div>
+    </main>
 
-
-    <div id="sitebottom">
+    <!-- Footer Section -->
+    <footer id="sitebottom">
         <p>Meal Master 🍽 — Made by <strong>Manoj Ahire</strong> | Powered by <a href="https://www.themealdb.com" target="_blank">TheMealDB</a></p>
-    </div>
+    </footer>
 
+    <!-- Linking our Javascript file -->
     <script src="script.js"></script>
 
 </body>
