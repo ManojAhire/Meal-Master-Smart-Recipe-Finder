@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- top of the page -->
+
     <div id="topbar">
         <div id="site-name">
             <h1>🍽 Meal Master</h1>
@@ -17,7 +17,6 @@
         <button id="dark">🌙 Dark Mode</button>
     </div>
 
-    <!-- category filter buttons -->
     <div id="filterbtns">
         <button class="f">All</button>
         <button class="f">🍗 Chicken</button>
@@ -29,32 +28,30 @@
         <button class="f" id="favbtn">❤️ Favorites (<span id="favcount">0</span>)</button>
     </div>
 
-    <!-- main content area -->
     <div id="wrapper">
 
-        <!-- search bar -->
+
         <div id="searcharea">
             <input type="text" id="searchbox" placeholder="Search by meal name or ingredient...">
             <button id="searchbtn">🔍 Search</button>
             <button id="clearbtn">Clear</button>
         </div>
 
-        <!-- random meal button -->
+
         <div id="randombtnbox">
             <button id="randombtn">🎲 Surprise Me! Get a Random Meal</button>
         </div>
 
-        <!-- meals area where cards show up -->
+
         <div id="mealsarea">
             <p id="waitMsg">Loading yummy meals... please wait ⏳</p>
             <p id="oopsMsg">❌ Something went wrong. Try again!</p>
             <p id="nothingMsg">😕 No meals found. Try something else!</p>
 
-            <!-- all the meal cards go in here -->
             <div id="allcards"></div>
         </div>
 
-        <!-- favorites section -->
+
         <div id="favsarea">
             <div id="favstop">
                 <h2>❤️ Your Favorite Recipes</h2>
