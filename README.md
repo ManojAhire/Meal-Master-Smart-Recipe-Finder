@@ -2,14 +2,25 @@
 
 ## 📌 Overview
 
-Meal Master is a web application that helps users find recipes based on ingredients they already have. It simplifies cooking decisions by suggesting meals instantly.
+Meal Master is a web application that helps users find recipes based on ingredients they already have. It simplifies cooking decisions by suggesting meals instantly. 
+
+This version was specifically built with a simple, beginner-friendly "90s web" aesthetic!
+
+## 📸 Screenshots
+
+### Search Results
+![Search Results](assets/search_results.png)
+
+### Recipe Detail Popup
+![Recipe Popup](assets/recipe_popup.png)
 
 ## 🚀 Features
 
-* Search recipes by ingredient
-* Display recipes in card format
-* View detailed cooking instructions
-* Responsive and user-friendly UI
+* Search recipes by ingredient or meal name
+* Filter meals by category (Chicken, Beef, Seafood, etc.)
+* "Surprise Me!" button to get a random meal instantly
+* View detailed cooking instructions and ingredients in a popup modal
+* Simple, old-school layout that is easy to understand
 
 ## 🔗 API Used
 
@@ -18,40 +29,30 @@ https://www.themealdb.com/api.php
 
 ## 🛠 Tech Stack
 
-* React.js
-* CSS / Tailwind
-* JavaScript (ES6)
+* HTML5
+* Vanilla CSS
+* Vanilla JavaScript (ES5 style)
 
 ## ⚙️ Setup Instructions
 
 1. Clone the repository:
 
-```
-git clone <your-repo-link>
+```bash
+git clone https://github.com/ManojAhire/Meal-Master-Smart-Recipe-Finder.git
 ```
 
 2. Navigate to the project folder:
 
-```
-cd meal-master
-```
-
-3. Install dependencies:
-
-```
-npm install
+```bash
+cd Meal-Master-Smart-Recipe-Finder
 ```
 
-4. Run the project:
-
-```
-npm start
-```
+3. Open `index.html` in any web browser! No `npm install` or build steps required.
 
 ## 🎯 Future Improvements
 
 * Add shopping list feature
-* Save favorite recipes
+* Save favorite recipes (add back LocalStorage)
 * Add nutrition information
 
 ## 👨‍💻 Author
