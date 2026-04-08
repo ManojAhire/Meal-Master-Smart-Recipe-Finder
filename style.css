@@ -10,7 +10,18 @@ body {
     background-color: orange;
     border-bottom: 5px solid darkred;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+#site-name {
+    text-align: left;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 #site-name h1 {
@@ -21,6 +32,23 @@ body {
 #site-name p {
     font-size: 18px;
     color: darkblue;
+    margin: 5px 0;
+}
+
+#upcoming-ad {
+    font-size: 16px;
+    color: darkred;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 75%;
+    background-color: orange;
+    padding: 8px 0;
+}
+
+#upcoming-ad p {
+    margin: 0;
 }
 
 #dark {
@@ -29,6 +57,7 @@ body {
     padding: 10px;
     border: 2px solid white;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 #filterbtns {
