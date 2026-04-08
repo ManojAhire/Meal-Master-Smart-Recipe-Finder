@@ -1,152 +1,206 @@
-var apiLink = "https://www.themealdb.com/api/json/v1/1/";
+const api = "https://www.themealdb.com/api/json/v1/1/";
+const el = {
+    search: document.getElementById("searchbtn"),
+    clear: document.getElementById("clearbtn"),
+    random: document.getElementById("randombtn"),
+    close: document.getElementById("closePopup"),
+    dark: document.getElementById("dark"),
+    sortAsc: document.getElementById("sortAscBtn"),
+    sortDesc: document.getElementById("sortDescBtn"),
+    input: document.getElementById("searchbox"),
+    cards: document.getElementById("allcards"),
+    popup: document.getElementById("recipePopup"),
+    popupContent: document.getElementById("popupContent"),
+    wait: document.getElementById("waitMsg"),
+    error: document.getElementById("oopsMsg"),
+    nothing: document.getElementById("nothingMsg")
+};
 
-var searchBtn = document.getElementById("searchbtn");
-var clearBtn = document.getElementById("clearbtn");
-var randomBtn = document.getElementById("randombtn");
-var closeBtn = document.getElementById("closePopup");
-var darkBtn = document.getElementById("dark");
+let meals = [];
+let displayed = [];
 
-var searchBox = document.getElementById("searchbox");
-var allCardsDiv = document.getElementById("allcards");
-var popupDiv = document.getElementById("recipePopup");
-var popupContentDiv = document.getElementById("popupContent");
-
-var waitMsg = document.getElementById("waitMsg");
-var oopsMsg = document.getElementById("oopsMsg");
-var nothingMsg = document.getElementById("nothingMsg");
-
-searchBtn.onclick = doSearch;
-clearBtn.onclick = clearSearch;
-randomBtn.onclick = getRandomMeal;
-closeBtn.onclick = closePopup;
-darkBtn.onclick = toggleDarkMode;
+el.dark.innerText = "🌙 Dark Mode";
+el.search.onclick = doSearch;
+el.clear.onclick = clearSearch;
+el.random.onclick = getRandomMeal;
+el.close.onclick = closePopup;
+el.dark.onclick = toggleDarkMode;
+el.sortAsc.onclick = sortMealsAsc;
+el.sortDesc.onclick = sortMealsDesc;
+document.querySelectorAll(".f").forEach(btn => btn.onclick = () => filterByCategory(btn.innerText));
+fetchInitialMeals();
 
 function toggleDarkMode() {
-    if (document.body.style.backgroundColor == "black") {
-        document.body.style.backgroundColor = "lightyellow";
-        document.body.style.color = "black";
-        darkBtn.innerText = "🌙 Dark Mode";
+    const isDark = document.body.classList.contains("dark-mode");
+    
+    if (isDark) {
+        document.body.classList.remove("dark-mode");
+        el.dark.innerText = "🌙 Dark Mode";
     } else {
-        document.body.style.backgroundColor = "black";
-        document.body.style.color = "white";
-        darkBtn.innerText = "☀️ Light Mode";
+        document.body.classList.add("dark-mode");
+        el.dark.innerText = "☀️ Light Mode";
     }
 }
 
-function doSearch() {
-    var whatTheUserTyped = searchBox.value;
+function hideMessages(show = null) {
+    el.wait.style.display = "none";
+    el.error.style.display = "none";
+    el.nothing.style.display = "none";
     
-    if (whatTheUserTyped == "") {
-        alert("Please type a meal name first!");
+    if (show === "wait") el.wait.style.display = "block";
+    else if (show === "error") el.error.style.display = "block";
+    else if (show === "nothing") el.nothing.style.display = "block";
+}
+
+function fetch2(url, onSuccess) {
+    hideMessages("wait");
+    fetch(api + url)
+        .then(r => r.json())
+        .then(d => { hideMessages(); onSuccess(d); })
+        .catch(() => hideMessages("error"));
+}
+
+function doSearch() {
+    const input = el.input.value.toLowerCase().trim();
+    
+    if (input === "") {
+        alert("Please enter a meal name!");
+        return;
+    }
+    
+    const results = meals.filter(m => {
+        const name = m.strMeal.toLowerCase();
+        const category = m.strCategory.toLowerCase();
+        const area = m.strArea.toLowerCase();
+        return name.includes(input) || category.includes(input) || area.includes(input);
+    });
+    displayed = results;
+    
+    if (results.length === 0) {
+        hideMessages("nothing");
     } else {
-        searchForMeals(whatTheUserTyped);
+        displayResults(results);
     }
 }
 
 function clearSearch() {
-    searchBox.value = "";
-    searchForMeals("");
+    el.input.value = "";
+    displayed = meals;
+    displayResults(meals);
+    hideMessages();
 }
 
-function searchForMeals(query) {
-    waitMsg.style.display = "block";
-    oopsMsg.style.display = "none";
-    nothingMsg.style.display = "none";
-    allCardsDiv.innerHTML = "";
-
-    fetch(apiLink + "search.php?s=" + query)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            if (data.meals == null) {
-                waitMsg.style.display = "none";
-                nothingMsg.style.display = "block";
-            } else {
-                waitMsg.style.display = "none";
-                displayResults(data.meals);
-            }
-        })
-        .catch(function(error) {
-            waitMsg.style.display = "none";
-            oopsMsg.style.display = "block";
-        });
+function fetchInitialMeals() {
+    fetch2("search.php?s=", d => {
+        if (d.meals && d.meals.length > 0) {
+            meals = d.meals;
+            displayed = d.meals;
+            displayResults(d.meals);
+        } else {
+            hideMessages("nothing");
+        }
+    });
 }
 
 function getRandomMeal() {
-    waitMsg.style.display = "block";
-    allCardsDiv.innerHTML = "";
-
-    fetch(apiLink + "random.php")
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-            waitMsg.style.display = "none";
-            displayResults(data.meals);
-            showRecipe(data.meals[0].idMeal);
-        });
+    hideMessages("wait");
+    el.cards.innerHTML = "";
+    
+    fetch2("random.php", d => {
+        if (d.meals && d.meals.length > 0) {
+            displayed = d.meals;
+            displayResults(d.meals);
+            showRecipe(d.meals[0].idMeal);
+        }
+    });
 }
 
-function displayResults(mealsArray) {
-    var bigListOfHTML = "";
-
-    for (var i = 0; i < mealsArray.length; i++) {
-        var currentMeal = mealsArray[i];
-
-        bigListOfHTML = bigListOfHTML + "<div class='mealcard'>";
-        bigListOfHTML = bigListOfHTML + "<img src='" + currentMeal.strMealThumb + "' class='mealimg'>";
-        bigListOfHTML = bigListOfHTML + "<h3>" + currentMeal.strMeal + "</h3>";
-        bigListOfHTML = bigListOfHTML + "<button onclick='showRecipe(\"" + currentMeal.idMeal + "\")'>See Recipe</button>";
-        bigListOfHTML = bigListOfHTML + "</div>";
+function displayResults(arr) {
+    if (arr.length === 0) {
+        el.cards.innerHTML = "";
+        return;
     }
-
-    allCardsDiv.innerHTML = bigListOfHTML;
+    
+    const htmlCards = arr.map(m => createCard(m));
+    el.cards.innerHTML = htmlCards.join("");
 }
 
-function showRecipe(mealId) {
-    fetch(apiLink + "lookup.php?i=" + mealId)
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-            var m = data.meals[0];
+function createCard(meal) {
+    return `
+        <div class="mealcard">
+            <img src="${meal.strMealThumb}" class="mealimg" alt="${meal.strMeal}">
+            <h3>${meal.strMeal}</h3>
+            <button class="likebtn" onclick="toggleLike(this)">🤍 Like</button>
+            <button onclick="showRecipe('${meal.idMeal}')">See Recipe</button>
+        </div>
+    `;
+}
 
-            var details = "<h2>" + m.strMeal + "</h2>";
-            details = details + "<img src='" + m.strMealThumb + "' width='100%'>";
-            details = details + "<p><strong>Category:</strong> " + m.strCategory + "</p>";
-            details = details + "<p><strong>Instructions:</strong><br>" + m.strInstructions + "</p>";
+function toggleLike(btn) {
+    const isLiked = btn.innerText.includes("❤️");
+    
+    if (isLiked) {
+        btn.innerHTML = "🤍 Like";
+        btn.classList.remove("liked");
+    } else {
+        btn.innerHTML = "❤️ Liked";
+        btn.classList.add("liked");
+    }
+}
 
-            popupContentDiv.innerHTML = details;
-            popupDiv.style.display = "block";
-        });
+function showRecipe(id) {
+    const meal = meals.find(x => x.idMeal == id);
+    
+    if (meal) {
+        renderRecipePopup(meal);
+    } else {
+        fetch(api + "lookup.php?i=" + id)
+            .then(r => r.json())
+            .then(d => renderRecipePopup(d.meals[0]));
+    }
+}
+
+function renderRecipePopup(meal) {
+    const html = `
+        <h2>${meal.strMeal}</h2>
+        <img src="${meal.strMealThumb}" width="100%" style="border-radius:10px;" alt="${meal.strMeal}">
+        <p><strong>Category:</strong> ${meal.strCategory}</p>
+        <p><strong>Instructions:</strong><br>${meal.strInstructions}</p>
+    `;
+    
+    el.popupContent.innerHTML = html;
+    el.popup.style.display = "block";
 }
 
 function closePopup() {
-    popupDiv.style.display = "none";
+    el.popup.style.display = "none";
 }
 
-var categoryButtons = document.getElementsByClassName("f");
+function sortMealsAsc() {
+    if (!displayed.length) return;
+    displayed.sort((a, b) => a.strMeal.localeCompare(b.strMeal));
+    displayResults(displayed);
+}
 
-for (var i = 0; i < categoryButtons.length; i++) {
-    categoryButtons[i].onclick = function() {
-        var buttonText = this.innerText;
-        
-        if (buttonText == "All") {
-            searchForMeals("");
-        } else {
-            var categoryName = buttonText.split(" ")[1]; 
-            filterByCategory(categoryName);
-        }
-    };
+function sortMealsDesc() {
+    if (!displayed.length) return;
+    displayed.sort((a, b) => b.strMeal.localeCompare(a.strMeal));
+    displayResults(displayed);
 }
 
 function filterByCategory(cat) {
-    waitMsg.style.display = "block";
-    allCardsDiv.innerHTML = "";
-
-    fetch(apiLink + "filter.php?c=" + cat)
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-            waitMsg.style.display = "none";
-            displayResults(data.meals);
-        });
+    hideMessages();
+    
+    if (cat === "All") {
+        displayed = meals;
+        displayResults(displayed);
+    } else {
+        displayed = meals.filter(m => m.strCategory === cat);
+        
+        if (displayed.length === 0) {
+            hideMessages("nothing");
+        } else {
+            displayResults(displayed);
+        }
+    }
 }
-
-searchForMeals("");

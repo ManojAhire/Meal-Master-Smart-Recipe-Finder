@@ -160,3 +160,82 @@ body {
 #sitebottom a {
     color: yellow;
 }
+
+/* --- Added Features Styles --- */
+
+/* Sorting Buttons */
+.sortbtn {
+    background-color: purple;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 14px;
+}
+
+/* Interactive Like Button Feature */
+.likebtn {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.likebtn.liked {
+    background-color: red;
+    color: white;
+}
+
+/* Improved Dark Mode Feature via CSS classes */
+body.dark-mode {
+    background-color: #222;
+    color: white;
+}
+
+body.dark-mode #topbar {
+    background-color: #111;
+    border-bottom: 5px solid #444;
+}
+
+body.dark-mode #site-name h1 {
+    color: #ff9800;
+}
+
+body.dark-mode #site-name p {
+    color: #add8e6;
+}
+
+body.dark-mode #filterbtns {
+    background-color: #444;
+    border-bottom: 3px solid #666;
+}
+
+body.dark-mode .f {
+    background-color: #333;
+    color: white;
+    border: 1px solid #777;
+}
+
+body.dark-mode #searcharea {
+    background-color: #333;
+    border: 2px dashed #555;
+}
+
+body.dark-mode .mealcard {
+    background-color: #444;
+    border: 2px solid #555;
+    color: white;
+}
+
+body.dark-mode #recipePopup {
+    background-color: #333;
+    color: white;
+    border: 10px solid #555;
+}
+
+body.dark-mode #sitebottom {
+    background-color: #111;
+}
