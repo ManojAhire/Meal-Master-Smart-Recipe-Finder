@@ -43,7 +43,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     top: 75%;
-    background-color: orange;
+    background-color: transparent;
     padding: 8px 0;
 }
 
@@ -267,4 +267,230 @@ body.dark-mode #recipePopup {
 
 body.dark-mode #sitebottom {
     background-color: #111;
+}
+
+/* === MOBILE RESPONSIVE DESIGN === */
+
+/* Mobile Devices (320px - 767px) */
+@media (max-width: 767px) {
+    #topbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    #site-name {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    #site-name h1 {
+        font-size: 18px;
+    }
+
+    #site-name p {
+        font-size: 14px;
+    }
+
+    #dark {
+        margin-top: 10px;
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    #upcoming-ad {
+        position: static;
+        transform: none;
+        left: auto;
+        top: auto;
+        margin-top: 15px;
+        padding: 8px 0;
+    }
+
+    #upcoming-ad p {
+        font-size: 14px;
+    }
+
+    #filterbtns {
+        padding: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .f {
+        font-size: 14px;
+        padding: 5px 8px;
+        margin: 3px;
+    }
+
+    #wrapper {
+        padding: 15px;
+    }
+
+    #searcharea {
+        padding: 12px;
+    }
+
+    #searchbox {
+        width: 100%;
+        max-width: 250px;
+        height: 35px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    #searchbtn, #clearbtn {
+        padding: 8px 12px;
+        font-size: 14px;
+        display: block;
+        width: 45%;
+        margin: 8px auto;
+        box-sizing: border-box;
+    }
+
+    #sortarea {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .sortbtn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    #randombtn {
+        font-size: 16px;
+        padding: 10px 15px;
+        width: 90%;
+        max-width: 200px;
+    }
+
+    .mealcard {
+        width: 90%;
+        max-width: 250px;
+        margin: 10px auto;
+        display: block;
+    }
+
+    .mealimg {
+        width: 100%;
+        max-width: 180px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .mealcard h3 {
+        font-size: 14px;
+    }
+
+    #recipePopup {
+        width: 95%;
+        max-width: 450px;
+        padding: 20px;
+    }
+
+    #sitebottom {
+        padding: 15px;
+        font-size: 12px;
+    }
+}
+
+/* Tablet Devices (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #topbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    #site-name {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    #site-name h1 {
+        font-size: 22px;
+    }
+
+    #upcoming-ad {
+        position: static;
+        transform: none;
+        left: auto;
+        top: auto;
+        margin-top: 10px;
+    }
+
+    #filterbtns {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .f {
+        font-size: 15px;
+        padding: 6px 12px;
+    }
+
+    #searchbox {
+        width: 70%;
+        max-width: 350px;
+        height: 35px;
+    }
+
+    #searchbtn, #clearbtn {
+        padding: 8px 15px;
+        font-size: 15px;
+    }
+
+    .mealcard {
+        width: calc(50% - 20px);
+        max-width: 250px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    #recipePopup {
+        width: 90%;
+        max-width: 550px;
+    }
+
+    #sitebottom {
+        font-size: 13px;
+    }
+}
+
+/* Desktop Devices (1025px and above) */
+@media (min-width: 1025px) {
+    #topbar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #site-name {
+        text-align: left;
+        flex: 0 0 auto;
+        align-items: flex-start;
+    }
+
+    #upcoming-ad {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 75%;
+    }
+
+    .mealcard {
+        width: 200px;
+    }
 }
